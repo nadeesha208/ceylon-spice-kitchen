@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ceylon Spice Kitchen – Sri Lankan & Asian Food | Larnaca, Cyprus</title>
+<meta name="description" content="Authentic Sri Lankan & Asian food in Larnaca, Cyprus. Order on Foody App. Open 6PM–10PM daily.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== VARIABLES ===== */
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --gold-dark: #8B6914;
+  --crimson: #8B1A1A;
+  --crimson-light: #C0392B;
+  --deep: #0D0A06;
+  --dark: #1A140C;
+  --card: #201810;
+  --card2: #2A1E12;
+  --text: #F5EDD8;
+  --muted: #A89880;
+  --spice-orange: #D4622A;
+  --spice-yellow: #F0A500;
+  --green: #4A7C59;
+  --radius: 16px;
+  --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--deep);
+  color: var(--text);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ===== ANIMATED BACKGROUND GRAIN ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+/* ===== FLOATING PARTICLES ===== */
+.particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.particle {
+  position: absolute;
+  width: 3px; height: 3px;
+  background: var(--gold);
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 70px;
+  background: rgba(13,10,6,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  transition: var(--transition);
+}
+nav.scrolled {
+  background: rgba(13,10,6,0.98);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo span { font-style: italic; color: var(--text); font-weight: 400; }
+.nav-logo-icon { font-size: 1.5rem; }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color var(--transition);
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 100%;
+  height: 1px;
+  background: var(--gold);
+  transition: right var(--transition);
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { right: 0; }
+.nav-cta {
+  background: var(--gold);
+  color: var(--deep) !important;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 600 !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 2px !important;
+  transition: background var(--transition), transform var(--transition) !important;
+}
+.nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+
+/* Mobile menu */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+.hamburger span { display: block; width: 25px; height: 2px; background: var(--gold); border-radius: 2px; transition: var(--transition); }
+.mobile-nav {
+  display: none;
+  position: fixed; top: 70px; left: 0; right: 0;
+  background: rgba(13,10,6,0.98);
+  backdrop-filter: blur(20px);
+  padding: 2rem 5%;
+  z-index: 999;
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  flex-direction: column; gap: 1.5rem;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  transition: color var(--transition);
+}
+.mobile-nav a:hover { color: var(--gold); }
+
+/* ===== HERO ===== */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  padding-top: 70px;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,26,26,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(212,98,42,0.15) 0%, transparent 50%),
+    var(--deep);
+}
+.hero-mandala {
+  position: absolute;
+  width: min(700px, 90vw);
+  height: min(700px, 90vw);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.06;
+  animation: rotateSlow 60s linear infinite;
+  pointer-events: none;
+}
+@keyframes rotateSlow { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 2rem 5%;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 50px;
+  padding: 8px 22px;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease both;
+}
+.hero-badge::before { content: '✦'; }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 8vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  animation: fadeInUp 0.9s ease 0.2s both;
+  margin-bottom: 1rem;
+}
+.hero-title .line1 { display: block; color: var(--text); }
+.hero-title .line2 {
+  display: block;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--spice-orange) 50%, var(--gold-light) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.9s ease 0.35s both;
+}
+.hero-info {
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.9s ease 0.45s both;
+}
+.hero-info-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-info-item .icon { font-size: 1rem; }
+.hero-info-divider { width: 1px; height: 20px; background: rgba(201,168,76,0.3); }
+.hero-buttons {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  animation: fadeInUp 0.9s ease 0.55s both;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--spice-orange) 100%);
+  color: var(--deep);
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 8px 30px rgba(201,168,76,0.35);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(201,168,76,0.5); }
+.btn-secondary {
+  background: transparent;
+  color: var(--gold);
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(201,168,76,0.5);
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-secondary:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: bounce 2s ease infinite;
+  color: var(--muted); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+}
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); }
+@keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+/* ===== SECTIONS ===== */
+section { position: relative; z-index: 2; }
+.section-header { text-align: center; margin-bottom: 4rem; }
+.section-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  position: relative;
+  padding: 0 2rem;
+}
+.section-badge::before, .section-badge::after {
+  content: '—';
+  position: absolute; top: 0;
+  color: rgba(201,168,76,0.4);
+}
+.section-badge::before { left: 0; }
+.section-badge::after { right: 0; }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+.section-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 550px; margin: 0 auto;
+  font-style: italic;
+}
+
+/* ===== DIVIDER ===== */
+.ornament-divider {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin: 1.5rem 0;
+}
+.ornament-divider::before, .ornament-divider::after {
+  content: '';
+  flex: 1; max-width: 120px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dark));
+}
+.ornament-divider::after { background: linear-gradient(to left, transparent, var(--gold-dark)); }
+.ornament-divider span { color: var(--gold); font-size: 1.1rem; }
+
+/* ===== ABOUT ===== */
+#about { padding: 8rem 5%; }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+  max-width: 1200px; margin: 0 auto;
+}
+.about-visual {
+  position: relative;
+}
+.about-img-frame {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  background: var(--card);
+}
+.about-img-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, transparent 60%);
+  z-index: 1;
+}
+.about-img-frame svg, .about-img-frame .food-illustration {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.about-badge-float {
+  position: absolute;
+  bottom: -1.5rem; right: -1.5rem;
+  background: var(--gold);
+  color: var(--deep);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+  z-index: 3;
+  box-shadow: 0 10px 40px rgba(201,168,76,0.4);
+}
+.about-badge-float .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1;
+  display: block;
+}
+.about-badge-float .txt { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; }
+.about-text .section-header { text-align: left; margin-bottom: 2rem; }
+.about-text .section-header .ornament-divider { justify-content: flex-start; }
+.about-text .section-header .ornament-divider::before { display: none; }
+.about-text .section-header .ornament-divider::after { max-width: 80px; }
+.about-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  line-height: 1.9;
+}
+.about-features {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  margin-top: 2rem;
+}
+.about-feature {
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.about-feature-icon {
+  width: 44px; height: 44px; min-width: 44px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.about-feature-text h4 { font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.about-feature-text p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+
+/* ===== MENU ===== */
+#menu { padding: 8rem 5%; background: linear-gradient(to bottom, transparent, rgba(26,20,12,0.6), transparent); }
+.menu-inner { max-width: 1300px; margin: 0 auto; }
+.menu-tabs {
+  display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.menu-tab {
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.2);
+  color: var(--muted);
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: 'Montserrat', sans-serif;
+}
+.menu-tab:hover { border-color: var(--gold); color: var(--gold); }
+.menu-tab.active { background: var(--gold); border-color: var(--gold); color: var(--deep); font-weight: 700; }
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+.menu-category { display: none; }
+.menu-category.active { display: contents; }
+.food-card {
+  background: var(--card);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  cursor: pointer;
+}
+.food-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.25);
+  border-color: rgba(201,168,76,0.3);
+}
+.food-img {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--card2);
+}
+.food-img-visual {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem;
+  background: var(--card2);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition);
+}
+.food-card:hover .food-img-visual { transform: scale(1.05); }
+.food-img-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+}
+.food-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--crimson);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 50px;
+}
+.food-badge.popular { background: var(--gold); color: var(--deep); }
+.food-badge.new-item { background: var(--green); }
+.food-body { padding: 1.5rem; }
+.food-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.food-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+.food-stars {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 1rem;
+}
+.stars { display: flex; gap: 2px; }
+.star { color: #ddd; font-size: 0.9rem; transition: color 0.1s; }
+.star.filled { color: var(--gold); }
+.star.half { color: var(--gold); }
+.rating-num { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+.rating-count { font-size: 0.72rem; color: rgba(168,152,128,0.6); }
+.food-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
+.food-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+.food-price span { font-size: 0.8rem; font-family: 'Montserrat', sans-serif; font-weight: 400; color: var(--muted); }
+.add-btn {
+  width: 38px; height: 38px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 1.4rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.add-btn:hover { background: var(--gold); color: var(--deep); transform: scale(1.1); }
+
+/* ===== SPICES ===== */
+#spices { padding: 8rem 5%; }
+.spices-intro {
+  max-width: 700px; margin: 0 auto 4rem;
+  text-align: center;
+}
+.spices-intro p { font-size: 0.9rem; color: var(--muted); line-height: 1.9; }
+.spices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  max-width: 1300px; margin: 0 auto;
+}
+.spice-card {
+  background: var(--card);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.spice-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+  border-color: rgba(201,168,76,0.25);
+}
+.spice-img {
+  aspect-ratio: 3/2;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4.5rem;
+  position: relative; overflow: hidden;
+}
+.spice-img::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 60%;
+  background: linear-gradient(to top, var(--card), transparent);
+}
+.spice-body { padding: 1.5rem; }
+.spice-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--gold-light);
+}
+.spice-sinhala { font-size: 0.72rem; color: var(--muted); letter-spacing: 1px; margin-bottom: 0.75rem; }
+.spice-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+.spice-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.spice-tag {
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  color: var(--gold);
+  font-size: 0.62rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+
+/* ===== EXPERIENCE STRIP ===== */
+#experience {
+  padding: 5rem 5%;
+  background: linear-gradient(135deg, rgba(139,26,26,0.2) 0%, rgba(201,168,76,0.08) 50%, rgba(212,98,42,0.15) 100%);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1000px; margin: 0 auto;
+  text-align: center;
+}
+.exp-item {}
+.exp-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.exp-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+
+/* ===== ORDER SECTION ===== */
+#order { padding: 8rem 5%; }
+.order-inner {
+  max-width: 900px; margin: 0 auto; text-align: center;
+}
+.order-card {
+  background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 24px;
+  padding: 4rem 3rem;
+  position: relative;
+  overflow: hidden;
+  margin-top: 3rem;
+}
+.order-card::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.order-card::after {
+  content: '';
+  position: absolute; bottom: -60px; left: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(212,98,42,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.foody-logo-area {
+  display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+  margin-bottom: 2rem; flex-wrap: wrap;
+}
+.foody-badge {
+  background: linear-gradient(135deg, #FF6B35, #FF9500);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 30px rgba(255,107,53,0.4);
+}
+.order-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: 1rem;
+}
+.order-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+.hours-grid {
+  display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+  margin: 2rem 0;
+}
+.hours-item { text-align: center; }
+.hours-time {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700; color: var(--gold);
+  display: block;
+}
+.hours-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.order-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+.order-step { text-align: center; }
+.step-num {
+  width: 50px; height: 50px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 0.75rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem; font-weight: 700; color: var(--gold);
+}
+.step-text { font-size: 0.78rem; color: var(--muted); }
+
+/* ===== FOOTER ===== */
+footer {
+  background: rgba(13,10,6,0.98);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  padding: 4rem 5% 2rem;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem; max-width: 1200px; margin: 0 auto 3rem;
+}
+.footer-brand .nav-logo { font-size: 1.5rem; margin-bottom: 1rem; }
+.footer-brand p { font-size: 0.82rem; color: var(--muted); line-height: 1.8; max-width: 300px; }
+.footer-col h5 {
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.25rem; font-weight: 600;
+}
+.footer-col ul li { margin-bottom: 0.6rem; }
+.footer-col ul li a { font-size: 0.82rem; color: var(--muted); transition: color var(--transition); }
+.footer-col ul li a:hover { color: var(--gold); }
+.footer-bottom {
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding-top: 2rem;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  max-width: 1200px; margin: 0 auto;
+}
+.footer-bottom p { font-size: 0.75rem; color: rgba(168,152,128,0.5); }
+.footer-social { display: flex; gap: 1rem; }
+.social-btn {
+  width: 36px; height: 36px;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.social-btn:hover { background: rgba(201,168,76,0.2); color: var(--gold); border-color: var(--gold); transform: translateY(-2px); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* ===== STAR RATING INTERACTIVE ===== */
+.stars-interactive { display: flex; gap: 3px; cursor: pointer; }
+.stars-interactive .star { font-size: 1.2rem; transition: transform 0.15s, color 0.15s; }
+.stars-interactive .star:hover,
+.stars-interactive .star.hovered { color: var(--gold); transform: scale(1.3); }
+.rating-message { font-size: 0.72rem; color: var(--gold); margin-top: 4px; min-height: 18px; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: var(--card);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 0.82rem;
+  color: var(--text);
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  display: flex; align-items: center; gap: 10px;
+  max-width: 300px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast-icon { font-size: 1.2rem; }
+
+/* ===== OPEN STATUS ===== */
+.open-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 50px;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+}
+.open-status.open { background: rgba(74,124,89,0.2); border: 1px solid rgba(74,124,89,0.4); color: #6BC583; }
+.open-status.closed { background: rgba(139,26,26,0.2); border: 1px solid rgba(139,26,26,0.4); color: #E05050; }
+.open-status .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+/* ===== FOOD ILLUSTRATION SVGs ===== */
+.food-svg-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .about-visual { max-width: 450px; margin: 0 auto; }
+  .experience-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero-info-divider { display: none; }
+  .about-features { grid-template-columns: 1fr; }
+  .order-steps { grid-template-columns: 1fr; gap: 1rem; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .menu-grid { grid-template-columns: 1fr; }
+  .spices-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .experience-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .order-card { padding: 2.5rem 1.5rem; }
+  .hours-grid { gap: 1.5rem; }
+  .menu-tabs { gap: 0.4rem; }
+  .menu-tab { padding: 8px 16px; font-size: 0.65rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">🛒</span>
+  <span id="toast-text">Added to your order!</span>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span class="nav-logo-icon">🌿</span>
+    Ceylon Spice <span>Kitchen</span>
+  </div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+    <a href="#spices">Our Spices</a>
+    <a href="#order">Order Now</a>
+    <a href="#order" class="nav-cta">🍛 Order on Foody</a>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#menu" onclick="closeMobileNav()">Menu</a>
+  <a href="#spices" onclick="closeMobileNav()">Our Spices</a>
+  <a href="#order" onclick="closeMobileNav()">Order Now</a>
+  <a href="#order" onclick="closeMobileNav()" style="color:var(--gold);">🍛 Order on Foody</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <!-- Mandala SVG -->
+  <svg class="hero-mandala" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="250" cy="250" r="240" stroke="#C9A84C" stroke-width="1" fill="none"/>
+    <circle cx="250" cy="250" r="200" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+    <circle cx="250" cy="250" r="160" stroke="#C9A84C" stroke-width="1" fill="none"/>
+    <circle cx="250" cy="250" r="120" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+    <circle cx="250" cy="250" r="80" stroke="#C9A84C" stroke-width="1" fill="none"/>
+    <circle cx="250" cy="250" r="40" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+    <g transform="rotate(0,250,250)"><line x1="250" y1="10" x2="250" y2="490" stroke="#C9A84C" stroke-width="0.5"/></g>
+    <g transform="rotate(30,250,250)"><line x1="250" y1="10" x2="250" y2="490" stroke="#C9A84C" stroke-width="0.5"/></g>
+    <g transform="rotate(60,250,250)"><line x1="250" y1="10" x2="250" y2="490" stroke="#C9A84C" stroke-width="0.5"/></g>
+    <g transform="rotate(90,250,250)"><line x1="250" y1="10" x2="250" y2="490" stroke="#C9A84C" stroke-width="0.5"/></g>
+    <g transform="rotate(120,250,250)"><line x1="250" y1="10" x2="250" y2="490" stroke="#C9A84C" stroke-width="0.5"/></g>
+    <g transform="rotate(150,250,250)"><line x1="250" y1="10" x2="250" y2="490" stroke="#C9A84C" stroke-width="0.5"/></g>
+    <g transform="rotate(22.5,250,250)"><ellipse cx="250" cy="130" rx="12" ry="30" stroke="#C9A84C" stroke-width="0.8" fill="none"/></g>
+    <g transform="rotate(67.5,250,250)"><ellipse cx="250" cy="130" rx="12" ry="30" stroke="#C9A84C" stroke-width="0.8" fill="none"/></g>
+    <g transform="rotate(112.5,250,250)"><ellipse cx="250" cy="130" rx="12" ry="30" stroke="#C9A84C" stroke-width="0.8" fill="none"/></g>
+    <g transform="rotate(157.5,250,250)"><ellipse cx="250" cy="130" rx="12" ry="30" stroke="#C9A84C" stroke-width="0.8" fill="none"/></g>
+    <g transform="rotate(202.5,250,250)"><ellipse cx="250" cy="130" rx="12" ry="30" stroke="#C9A84C" stroke-width="0.8" fill="none"/></g>
+    <g transform="rotate(247.5,250,250)"><ellipse cx="250" cy="130" rx="12" ry="30" stroke="#C9A84C" stroke-width="0.8" fill="none"/></g>
+    <g transform="rotate(292.5,250,250)"><ellipse cx="250" cy="130" rx="12" ry="30" stroke="#C9A84C" stroke-width="0.8" fill="none"/></g>
+    <g transform="rotate(337.5,250,250)"><ellipse cx="250" cy="130" rx="12" ry="30" stroke="#C9A84C" stroke-width="0.8" fill="none"/></g>
+    <circle cx="250" cy="250" r="8" fill="#C9A84C" opacity="0.8"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      Authentic Sri Lankan & Asian Cuisine · Larnaca, Cyprus
+    </div>
+    <h1 class="hero-title">
+      <span class="line1">Ceylon Spice</span>
+      <span class="line2">Kitchen</span>
+    </h1>
+    <p class="hero-subtitle">Where every dish tells a story of Ceylon's ancient spice trade</p>
+    <div class="hero-info">
+      <div class="hero-info-item"><span class="icon">📍</span> Larnaca, Cyprus</div>
+      <div class="hero-info-divider"></div>
+      <div class="hero-info-item"><span class="icon">🕕</span> 6:00 PM – 10:00 PM</div>
+      <div class="hero-info-divider"></div>
+      <div id="openStatus"></div>
+    </div>
+    <div class="hero-buttons">
+      <a href="#order" class="btn-primary">🍛 Order on Foody App</a>
+      <a href="#menu" class="btn-secondary">✦ View Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal-left">
+      <div class="about-img-frame">
+        <!-- Illustrated chef / food scene SVG -->
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;background:#1e1308;">
+          <!-- Background pattern -->
+          <defs>
+            <radialGradient id="bg-glow" cx="50%" cy="40%">
+              <stop offset="0%" stop-color="#3a2208" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#100a04" stop-opacity="1"/>
+            </radialGradient>
+            <pattern id="diamond" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+              <polygon points="15,2 28,15 15,28 2,15" fill="none" stroke="#C9A84C" stroke-width="0.3" opacity="0.2"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="500" fill="url(#bg-glow)"/>
+          <rect width="400" height="500" fill="url(#diamond)"/>
+          <!-- Decorative plate -->
+          <ellipse cx="200" cy="340" rx="150" ry="30" fill="#0d0805" opacity="0.5"/>
+          <ellipse cx="200" cy="330" rx="140" ry="15" fill="#2a1a08" stroke="#C9A84C" stroke-width="1"/>
+          <!-- Rice mound -->
+          <ellipse cx="200" cy="290" rx="90" ry="40" fill="#e8d5a0"/>
+          <ellipse cx="200" cy="285" rx="75" ry="32" fill="#f0e0b0"/>
+          <ellipse cx="200" cy="278" rx="55" ry="22" fill="#f5e8c0"/>
+          <!-- Curry pool on rice -->
+          <ellipse cx="170" cy="295" rx="40" ry="18" fill="#8B2500" opacity="0.85"/>
+          <ellipse cx="235" cy="292" rx="30" ry="14" fill="#2d5016" opacity="0.85"/>
+          <!-- Garnish dots -->
+          <circle cx="185" cy="288" r="3" fill="#ff6b35" opacity="0.9"/>
+          <circle cx="200" cy="283" r="2.5" fill="#ffd700" opacity="0.9"/>
+          <circle cx="215" cy="290" r="2" fill="#4a9c2a" opacity="0.9"/>
+          <!-- Steam lines -->
+          <path d="M180 260 Q175 245 180 232 Q185 219 180 206" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="translate" values="0,0;2,-5;0,-8;-2,-5;0,0" dur="3s" repeatCount="indefinite"/>
+          </path>
+          <path d="M200 255 Q205 238 200 224 Q195 210 200 196" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="translate" values="0,0;-2,-5;0,-8;2,-5;0,0" dur="3.5s" repeatCount="indefinite"/>
+          </path>
+          <path d="M220 258 Q215 243 220 230 Q225 217 220 204" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="translate" values="0,0;2,-5;0,-8;-2,-5;0,0" dur="2.8s" repeatCount="indefinite"/>
+          </path>
+          <!-- Decorative spices around plate -->
+          <text x="60" y="310" font-size="28" opacity="0.8">🌿</text>
+          <text x="310" y="305" font-size="22" opacity="0.8">🌶️</text>
+          <text x="80" y="370" font-size="18" opacity="0.7">✦</text>
+          <text x="300" y="365" font-size="18" opacity="0.7">✦</text>
+          <!-- Title text in SVG -->
+          <text x="200" y="420" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#C9A84C" font-weight="bold" letter-spacing="3">CEYLON</text>
+          <text x="200" y="445" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#8B6914" letter-spacing="5">SPICE KITCHEN</text>
+          <!-- Decorative border -->
+          <rect x="20" y="20" width="360" height="460" rx="12" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.3"/>
+          <rect x="30" y="30" width="340" height="440" rx="10" fill="none" stroke="#C9A84C" stroke-width="0.3" opacity="0.2"/>
+          <!-- Corner ornaments -->
+          <text x="28" y="52" font-size="18" fill="#C9A84C" opacity="0.5">❧</text>
+          <text x="350" y="52" font-size="18" fill="#C9A84C" opacity="0.5" transform="scale(-1,1) translate(-380,0)">❧</text>
+          <text x="28" y="488" font-size="18" fill="#C9A84C" opacity="0.5">❧</text>
+          <text x="350" y="488" font-size="18" fill="#C9A84C" opacity="0.5" transform="scale(-1,1) translate(-380,0)">❧</text>
+          <!-- Chef hat icon -->
+          <ellipse cx="200" cy="120" rx="55" ry="20" fill="#f5f0e8"/>
+          <ellipse cx="200" cy="108" rx="42" ry="35" fill="#f5f0e8"/>
+          <ellipse cx="175" cy="98" rx="18" ry="28" fill="#f5f0e8"/>
+          <ellipse cx="200" cy="92" rx="18" ry="28" fill="#f5f0e8"/>
+          <ellipse cx="225" cy="98" rx="18" ry="28" fill="#f5f0e8"/>
+          <rect x="158" y="118" width="84" height="16" rx="3" fill="#e8e0d0"/>
+          <!-- Face -->
+          <ellipse cx="200" cy="165" rx="30" ry="28" fill="#c8956c"/>
+          <circle cx="191" cy="160" r="3.5" fill="#3d2010"/>
+          <circle cx="209" cy="160" r="3.5" fill="#3d2010"/>
+          <path d="M190 175 Q200 182 210 175" stroke="#3d2010" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Collar -->
+          <path d="M170 192 Q200 205 230 192" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="about-badge-float">
+        <span class="num">20+</span>
+        <span class="txt">Years of<br>Mastery</span>
+      </div>
+    </div>
+
+    <div class="about-text">
+      <div class="section-header">
+        <p class="section-badge">Our Story</p>
+        <h2 class="section-title">Passion Cooked<br>Into Every <em>Bite</em></h2>
+        <div class="ornament-divider"><span>✦</span></div>
+      </div>
+      <p class="about-desc">
+        Born in the heart of Sri Lanka and brought to the shores of Larnaca, Cyprus, Ceylon Spice Kitchen is more than a restaurant — it's a celebration of heritage, flavour, and over two decades of culinary devotion.
+      </p>
+      <p class="about-desc">
+        Our chef and owner brings 20+ years of professional experience in the food industry, mastering the art of Sri Lankan cuisine and Southeast Asian flavours. Every dish is crafted using exclusively <strong style="color:var(--gold-light)">All Ceylon Spices</strong>, sourced directly from the island's most prized spice gardens.
+      </p>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="about-feature-icon">🌿</div>
+          <div class="about-feature-text">
+            <h4>All Ceylon Spices</h4>
+            <p>100% authentic spices imported from Sri Lanka's finest estates</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">👨‍🍳</div>
+          <div class="about-feature-text">
+            <h4>20+ Years Expertise</h4>
+            <p>Decades of mastery in traditional & fusion Asian cooking</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🛵</div>
+          <div class="about-feature-text">
+            <h4>Foody Delivery</h4>
+            <p>Fast, reliable delivery across Larnaca via the Foody app</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🕕</div>
+          <div class="about-feature-text">
+            <h4>Evening Hours</h4>
+            <p>Open daily 6:00 PM – 10:00 PM Cyprus time</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE STRIP -->
+<section id="experience">
+  <div class="experience-grid reveal">
+    <div class="exp-item">
+      <span class="exp-num" data-target="20">0</span>
+      <span class="exp-label">Years Experience</span>
+    </div>
+    <div class="exp-item">
+      <span class="exp-num" data-target="30">0</span>
+      <span class="exp-label">Menu Items</span>
+    </div>
+    <div class="exp-item">
+      <span class="exp-num" data-target="12">0</span>
+      <span class="exp-label">Ceylon Spices</span>
+    </div>
+    <div class="exp-item">
+      <span class="exp-num" data-target="500">0</span>
+      <span class="exp-label">Happy Customers</span>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-inner">
+    <div class="section-header reveal">
+      <p class="section-badge">Our Menu</p>
+      <h2 class="section-title">A Feast of <em>Flavours</em></h2>
+      <div class="ornament-divider"><span>✦</span></div>
+      <p class="section-desc">Each dish lovingly crafted with authentic Ceylon spices, bringing Sri Lanka's culinary treasures to Cyprus.</p>
+    </div>
+
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-cat="all">All Items</button>
+      <button class="menu-tab" data-cat="rice">Rice Dishes</button>
+      <button class="menu-tab" data-cat="kottu">Kottu</button>
+      <button class="menu-tab" data-cat="breads">Breads & Wraps</button>
+      <button class="menu-tab" data-cat="asian">Asian Favourites</button>
+    </div>
+
+    <div class="menu-grid">
+      <!-- RICE DISHES -->
+      <div class="menu-category active" data-category="rice">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#2a1a08,#1a0f05);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="105" rx="75" ry="22" fill="#0d0805"/>
+                <ellipse cx="100" cy="98" rx="68" ry="18" fill="#2a1a08" stroke="#C9A84C" stroke-width="0.5"/>
+                <ellipse cx="100" cy="80" rx="55" ry="28" fill="#e8d5a0"/>
+                <ellipse cx="100" cy="74" rx="45" ry="22" fill="#f0e0b0"/>
+                <ellipse cx="85" cy="82" rx="30" ry="14" fill="#8B2500" opacity="0.85"/>
+                <ellipse cx="118" cy="78" rx="22" ry="12" fill="#2d5016" opacity="0.85"/>
+                <ellipse cx="100" cy="60" rx="18" ry="10" fill="#D4622A" opacity="0.7"/>
+                <circle cx="88" cy="72" r="3" fill="#ff6b35"/>
+                <circle cx="100" cy="66" r="2.5" fill="#ffd700"/>
+                <circle cx="112" cy="74" r="2" fill="#4a9c2a"/>
+                <text x="28" y="58" font-size="22">🌿</text>
+                <text x="148" y="55" font-size="18">🌶️</text>
+              </svg>
+            </div>
+            <span class="food-badge popular">⭐ Popular</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Ceylon Rice & Curry</h3>
+            <p class="food-desc">Fragrant steamed rice served with authentic dhal curry, coconut sambol, and your choice of chicken or vegetable curry — bursting with Ceylon spices.</p>
+            <div class="food-stars">
+              <div class="stars" id="stars-1" data-rating="4.8">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
+              </div>
+              <span class="rating-num">4.8</span>
+              <span class="rating-count">(142 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€8.50 <span>/ plate</span></div>
+              <button class="add-btn" title="Add to order">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category active" data-category="rice">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#1a0a0a,#2a0d05);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="105" rx="70" ry="20" fill="#0d0805"/>
+                <ellipse cx="100" cy="100" rx="65" ry="17" fill="#2a1208" stroke="#C9A84C" stroke-width="0.5"/>
+                <ellipse cx="100" cy="82" rx="52" ry="26" fill="#d4a843"/>
+                <ellipse cx="100" cy="76" rx="42" ry="20" fill="#e8c060"/>
+                <ellipse cx="80" cy="80" rx="28" ry="13" fill="#8B1A00" opacity="0.9"/>
+                <ellipse cx="118" cy="77" rx="20" ry="11" fill="#1a3d08" opacity="0.9"/>
+                <ellipse cx="100" cy="68" rx="15" ry="8" fill="#ffd700" opacity="0.7"/>
+                <text x="22" y="48" font-size="24">🍗</text>
+                <text x="148" y="52" font-size="20">🌿</text>
+                <text x="85" y="42" font-size="14" fill="#C9A84C" font-family="Georgia" font-weight="bold">BIRYANI</text>
+              </svg>
+            </div>
+            <span class="food-badge">Chef's Pick</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Chicken Biryani</h3>
+            <p class="food-desc">Aromatic long-grain rice layered with tender chicken, saffron, and our signature Ceylon spice blend. Served with raita and mint chutney.</p>
+            <div class="food-stars">
+              <div class="stars" data-rating="4.9">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
+              </div>
+              <span class="rating-num">4.9</span>
+              <span class="rating-count">(98 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€10.50 <span>/ plate</span></div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category active" data-category="rice">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#0a1a0a,#081205);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="105" rx="70" ry="20" fill="#0a0d05"/>
+                <ellipse cx="100" cy="100" rx="65" ry="17" fill="#12200a" stroke="#C9A84C" stroke-width="0.5"/>
+                <ellipse cx="100" cy="80" rx="52" ry="26" fill="#3d6b1a"/>
+                <ellipse cx="100" cy="75" rx="42" ry="20" fill="#4a7c20"/>
+                <ellipse cx="78" cy="80" rx="26" ry="12" fill="#2d5016"/>
+                <ellipse cx="120" cy="77" rx="20" ry="11" fill="#8B6914" opacity="0.8"/>
+                <circle cx="90" cy="70" r="5" fill="#fff" opacity="0.7"/>
+                <circle cx="110" cy="73" r="4" fill="#ff8c00" opacity="0.8"/>
+                <text x="22" y="48" font-size="24">🥥</text>
+                <text x="148" y="52" font-size="20">🌿</text>
+              </svg>
+            </div>
+            <span class="food-badge new-item">New</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Coconut Green Rice</h3>
+            <p class="food-desc">Fragrant rice cooked in fresh coconut milk with pandan, curry leaves, and Ceylon cinnamon. A true taste of the tropics.</p>
+            <div class="food-stars">
+              <div class="stars" data-rating="4.7">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
+              </div>
+              <span class="rating-num">4.7</span>
+              <span class="rating-count">(56 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€7.50 <span>/ plate</span></div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KOTTU -->
+      <div class="menu-category active" data-category="kottu">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#1a0a05,#250f08);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="108" rx="75" ry="22" fill="#0d0805"/>
+                <ellipse cx="100" cy="100" rx="68" ry="18" fill="#2a1208" stroke="#C9A84C" stroke-width="0.5"/>
+                <!-- Kottu shredded roti layers -->
+                <rect x="42" y="62" width="116" height="38" rx="4" fill="#c8864a"/>
+                <line x1="48" y1="68" x2="152" y2="68" stroke="#a06030" stroke-width="1.5"/>
+                <line x1="50" y1="74" x2="148" y2="74" stroke="#b07040" stroke-width="1"/>
+                <line x1="46" y1="80" x2="154" y2="80" stroke="#a06030" stroke-width="1.5"/>
+                <line x1="48" y1="86" x2="150" y2="86" stroke="#b07040" stroke-width="1"/>
+                <line x1="44" y1="92" x2="152" y2="92" stroke="#a06030" stroke-width="1.5"/>
+                <!-- Vertical cuts -->
+                <line x1="65" y1="62" x2="62" y2="100" stroke="#904020" stroke-width="1"/>
+                <line x1="85" y1="62" x2="82" y2="100" stroke="#904020" stroke-width="1"/>
+                <line x1="105" y1="62" x2="105" y2="100" stroke="#904020" stroke-width="1"/>
+                <line x1="125" y1="62" x2="128" y2="100" stroke="#904020" stroke-width="1"/>
+                <line x1="145" y1="62" x2="148" y2="100" stroke="#904020" stroke-width="1"/>
+                <!-- Vegs and chicken on top -->
+                <circle cx="72" cy="60" r="4" fill="#228B22" opacity="0.9"/>
+                <circle cx="90" cy="57" r="3.5" fill="#ff4500" opacity="0.85"/>
+                <circle cx="108" cy="59" r="4" fill="#ffd700" opacity="0.8"/>
+                <circle cx="126" cy="58" r="3" fill="#228B22" opacity="0.9"/>
+                <ellipse cx="100" cy="55" rx="18" ry="6" fill="#d4622a" opacity="0.7"/>
+                <text x="22" y="50" font-size="22">🍗</text>
+                <text x="150" y="50" font-size="20">🌶️</text>
+              </svg>
+            </div>
+            <span class="food-badge popular">⭐ Best Seller</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Chicken Kottu</h3>
+            <p class="food-desc">Sri Lanka's iconic street food — shredded roti wok-tossed with chicken, eggs, vegetables, and a fiery Ceylon spice gravy. Unforgettable.</p>
+            <div class="food-stars">
+              <div class="stars" data-rating="5.0">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
+              </div>
+              <span class="rating-num">5.0</span>
+              <span class="rating-count">(201 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€9.50 <span>/ plate</span></div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category active" data-category="kottu">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#1a1205,#20180a);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="108" rx="75" ry="22" fill="#0d0a05"/>
+                <ellipse cx="100" cy="100" rx="68" ry="18" fill="#2a2008" stroke="#C9A84C" stroke-width="0.5"/>
+                <rect x="42" y="62" width="116" height="38" rx="4" fill="#c8864a"/>
+                <line x1="48" y1="68" x2="152" y2="68" stroke="#a06030" stroke-width="1.5"/>
+                <line x1="50" y1="74" x2="148" y2="74" stroke="#b07040" stroke-width="1"/>
+                <line x1="46" y1="80" x2="154" y2="80" stroke="#a06030" stroke-width="1.5"/>
+                <line x1="48" y1="86" x2="150" y2="86" stroke="#b07040" stroke-width="1"/>
+                <line x1="44" y1="92" x2="152" y2="92" stroke="#a06030" stroke-width="1.5"/>
+                <line x1="65" y1="62" x2="62" y2="100" stroke="#904020" stroke-width="1"/>
+                <line x1="85" y1="62" x2="82" y2="100" stroke="#904020" stroke-width="1"/>
+                <line x1="105" y1="62" x2="105" y2="100" stroke="#904020" stroke-width="1"/>
+                <line x1="125" y1="62" x2="128" y2="100" stroke="#904020" stroke-width="1"/>
+                <!-- Cheese omelet topping -->
+                <ellipse cx="100" cy="58" rx="40" ry="14" fill="#f5c842" opacity="0.9"/>
+                <ellipse cx="100" cy="56" rx="32" ry="10" fill="#ffd94a" opacity="0.85"/>
+                <circle cx="88" cy="55" r="5" fill="#ffeb70" opacity="0.7"/>
+                <circle cx="112" cy="57" r="4" fill="#ffeb70" opacity="0.7"/>
+                <text x="22" y="48" font-size="22">🧀</text>
+                <text x="150" y="48" font-size="20">🥚</text>
+              </svg>
+            </div>
+            <span class="food-badge popular">⭐ Fan Fav</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Cheese Omelette Kottu</h3>
+            <p class="food-desc">The fan-favourite: crispy shredded roti tossed with a fluffy cheese omelette, spring onions, and our signature spice blend. Indulgent perfection.</p>
+            <div class="food-stars">
+              <div class="stars" data-rating="4.9">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
+              </div>
+              <span class="rating-num">4.9</span>
+              <span class="rating-count">(175 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€9.00 <span>/ plate</span></div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BREADS -->
+      <div class="menu-category active" data-category="breads">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#1a1208,#22180a);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="110" rx="72" ry="20" fill="#0d0a05"/>
+                <!-- Paratha layers -->
+                <ellipse cx="100" cy="95" rx="65" ry="16" fill="#d4a843"/>
+                <ellipse cx="100" cy="88" rx="62" ry="15" fill="#e8c060"/>
+                <ellipse cx="100" cy="82" rx="58" ry="14" fill="#f0cc6a"/>
+                <ellipse cx="100" cy="78" rx="52" ry="12" fill="#e8b84a"/>
+                <!-- Charred spots -->
+                <ellipse cx="75" cy="80" rx="8" ry="5" fill="#8B5500" opacity="0.5"/>
+                <ellipse cx="125" cy="82" rx="6" ry="4" fill="#8B5500" opacity="0.5"/>
+                <ellipse cx="100" cy="76" rx="10" ry="4" fill="#8B5500" opacity="0.4"/>
+                <!-- Butter shine -->
+                <ellipse cx="90" cy="74" rx="12" ry="5" fill="#fff" opacity="0.15"/>
+                <!-- Curry dip bowl -->
+                <ellipse cx="156" cy="90" rx="22" ry="10" fill="#2a1208"/>
+                <ellipse cx="156" cy="87" rx="20" ry="9" fill="#8B2500" opacity="0.9"/>
+                <text x="22" y="50" font-size="22">🍞</text>
+                <text x="150" y="50" font-size="20">🌿</text>
+              </svg>
+            </div>
+            <span class="food-badge">Sri Lankan</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Paratha with Curry</h3>
+            <p class="food-desc">Flaky, buttery layered flatbread made from scratch, served hot with a rich lentil dhal curry or chicken curry dipping sauce.</p>
+            <div class="food-stars">
+              <div class="stars" data-rating="4.8">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
+              </div>
+              <span class="rating-num">4.8</span>
+              <span class="rating-count">(134 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€6.50 <span>/ serving</span></div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASIAN FAVOURITES -->
+      <div class="menu-category active" data-category="asian">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#0a1a0d,#0f2010);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="108" rx="72" ry="20" fill="#080d08"/>
+                <ellipse cx="100" cy="100" rx="66" ry="17" fill="#12200a" stroke="#C9A84C" stroke-width="0.5"/>
+                <!-- Spring rolls -->
+                <rect x="30" y="62" width="55" height="28" rx="14" fill="#d4a843" transform="rotate(-15,57,76)"/>
+                <rect x="32" y="64" width="51" height="24" rx="12" fill="#e8c060" transform="rotate(-15,57,76)"/>
+                <line x1="35" y1="68" x2="80" y2="62" stroke="#c09030" stroke-width="1" opacity="0.6"/>
+                <line x1="35" y1="73" x2="80" y2="67" stroke="#c09030" stroke-width="1" opacity="0.6"/>
+                <rect x="115" y="55" width="55" height="28" rx="14" fill="#c89030" transform="rotate(10,142,69)"/>
+                <rect x="117" y="57" width="51" height="24" rx="12" fill="#dcaa40" transform="rotate(10,142,69)"/>
+                <!-- Sauce -->
+                <ellipse cx="100" cy="98" rx="22" ry="8" fill="#8B0000" opacity="0.8"/>
+                <!-- Sesame dots -->
+                <circle cx="95" cy="96" r="1.5" fill="#fff" opacity="0.7"/>
+                <circle cx="103" cy="98" r="1.5" fill="#fff" opacity="0.7"/>
+                <circle cx="99" cy="100" r="1.5" fill="#fff" opacity="0.7"/>
+                <text x="165" y="48" font-size="20">🥢</text>
+                <text x="22" y="50" font-size="20">🥬</text>
+              </svg>
+            </div>
+            <span class="food-badge new-item">Asian</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Crispy Spring Rolls</h3>
+            <p class="food-desc">Golden crispy spring rolls stuffed with seasoned vegetables and chicken, wok-fried to perfection. Served with sweet chilli sauce.</p>
+            <div class="food-stars">
+              <div class="stars" data-rating="4.6">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
+              </div>
+              <span class="rating-num">4.6</span>
+              <span class="rating-count">(89 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€7.00 <span>/ 4 pcs</span></div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category active" data-category="asian">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#1a0808,#200a0a);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="108" rx="72" ry="20" fill="#0d0505"/>
+                <ellipse cx="100" cy="100" rx="66" ry="17" fill="#200a0a" stroke="#C9A84C" stroke-width="0.5"/>
+                <!-- Noodle base -->
+                <path d="M40 90 Q60 70 80 88 Q100 106 120 88 Q140 70 160 88" stroke="#e8c060" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M38 96 Q58 76 78 94 Q98 112 118 94 Q138 76 158 94" stroke="#d4aa50" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M40 82 Q65 62 90 80 Q105 95 125 80 Q145 62 162 80" stroke="#f0d070" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <!-- Toppings -->
+                <ellipse cx="80" cy="76" rx="12" ry="7" fill="#d4622a" opacity="0.85"/>
+                <ellipse cx="120" cy="74" rx="10" ry="6" fill="#228B22" opacity="0.85"/>
+                <ellipse cx="100" cy="70" rx="8" ry="5" fill="#ffd700" opacity="0.7"/>
+                <circle cx="90" cy="68" r="3" fill="#ff4500" opacity="0.8"/>
+                <circle cx="110" cy="70" r="3" fill="#ff4500" opacity="0.8"/>
+                <text x="22" y="48" font-size="22">🍜</text>
+                <text x="150" y="50" font-size="20">🌶️</text>
+              </svg>
+            </div>
+            <span class="food-badge">Spicy</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Spicy Wok Noodles</h3>
+            <p class="food-desc">Stir-fried egg noodles with chicken or vegetables, tossed in a fiery Ceylon chilli and soy sauce glaze. A Southeast Asian classic.</p>
+            <div class="food-stars">
+              <div class="stars" data-rating="4.7">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
+              </div>
+              <span class="rating-num">4.7</span>
+              <span class="rating-count">(112 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€8.00 <span>/ plate</span></div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category active" data-category="asian">
+        <div class="food-card reveal" onclick="handleOrder(this)">
+          <div class="food-img">
+            <div class="food-img-visual" style="background:linear-gradient(135deg,#1a1208,#200f08);">
+              <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <ellipse cx="100" cy="108" rx="72" ry="20" fill="#0d0a05"/>
+                <ellipse cx="100" cy="100" rx="66" ry="17" fill="#1a1208" stroke="#C9A84C" stroke-width="0.5"/>
+                <!-- Fried rice -->
+                <ellipse cx="100" cy="82" rx="55" ry="26" fill="#d4a843"/>
+                <ellipse cx="100" cy="76" rx="48" ry="21" fill="#e0b44a"/>
+                <!-- Rice grain texture -->
+                <rect x="68" y="70" width="5" height="2" rx="1" fill="#f0cc70" opacity="0.8"/>
+                <rect x="82" y="66" width="5" height="2" rx="1" fill="#f0cc70" opacity="0.8"/>
+                <rect x="96" y="68" width="5" height="2" rx="1" fill="#f0cc70" opacity="0.8"/>
+                <rect x="110" y="65" width="5" height="2" rx="1" fill="#f0cc70" opacity="0.8"/>
+                <rect x="124" y="69" width="5" height="2" rx="1" fill="#f0cc70" opacity="0.8"/>
+                <rect x="75" y="74" width="5" height="2" rx="1" fill="#f0cc70" opacity="0.8"/>
+                <rect x="103" y="72" width="5" height="2" rx="1" fill="#f0cc70" opacity="0.8"/>
+                <rect x="118" y="74" width="5" height="2" rx="1" fill="#f0cc70" opacity="0.8"/>
+                <!-- Mix-ins -->
+                <circle cx="82" cy="72" r="4" fill="#228B22" opacity="0.9"/>
+                <circle cx="112" cy="70" r="3.5" fill="#ff4500" opacity="0.85"/>
+                <circle cx="98" cy="74" r="3" fill="#ffd700" opacity="0.8"/>
+                <ellipse cx="100" cy="62" rx="15" ry="6" fill="#d4622a" opacity="0.75"/>
+                <text x="22" y="50" font-size="22">🍳</text>
+                <text x="150" y="50" font-size="20">🥕</text>
+              </svg>
+            </div>
+            <span class="food-badge popular">⭐ Popular</span>
+          </div>
+          <div class="food-body">
+            <h3 class="food-name">Ceylon Fried Rice</h3>
+            <p class="food-desc">Wok-fried jasmine rice with egg, vegetables, and chicken, seasoned with turmeric, pepper, and Ceylon curry leaf for an authentic island flavour.</p>
+            <div class="food-stars">
+              <div class="stars" data-rating="4.8">
+                <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
+              </div>
+              <span class="rating-num">4.8</span>
+              <span class="rating-count">(167 reviews)</span>
+            </div>
+            <div class="food-footer">
+              <div class="food-price">€8.00 <span>/ plate</span></div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /menu-grid -->
+  </div>
+</section>
+
+<!-- SPICES -->
+<section id="spices">
+  <div class="section-header reveal">
+    <p class="section-badge">The Secret</p>
+    <h2 class="section-title">All Ceylon <em>Spices</em></h2>
+    <div class="ornament-divider"><span>✦</span></div>
+    <p class="section-desc">We use only 100% authentic Ceylon spices, sourced directly from Sri Lanka's finest estates. These ancient aromatics are the soul of every dish.</p>
+  </div>
+  <div class="spices-grid">
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#3d1a08,#1a0a04);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs><radialGradient id="cinn-glow"><stop offset="0%" stop-color="#8B4513" stop-opacity="0.3"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+          <rect width="300" height="200" fill="url(#cinn-glow)"/>
+          <!-- Cinnamon sticks -->
+          <rect x="60" y="60" width="180" height="20" rx="10" fill="#8B4513" transform="rotate(-5,150,70)"/>
+          <rect x="62" y="62" width="176" height="16" rx="8" fill="#a0522d" transform="rotate(-5,150,70)"/>
+          <rect x="55" y="90" width="190" height="18" rx="9" fill="#8B4513" transform="rotate(3,150,99)"/>
+          <rect x="57" y="92" width="186" height="14" rx="7" fill="#a0522d" transform="rotate(3,150,99)"/>
+          <rect x="70" y="120" width="160" height="16" rx="8" fill="#6B3010" transform="rotate(-2,150,128)"/>
+          <!-- Texture lines on sticks -->
+          <line x1="80" y1="64" x2="80" y2="76" stroke="#6B3010" stroke-width="1.5" opacity="0.7" transform="rotate(-5,80,70)"/>
+          <line x1="100" y1="63" x2="100" y2="77" stroke="#6B3010" stroke-width="1.5" opacity="0.7" transform="rotate(-5,100,70)"/>
+          <line x1="120" y1="62" x2="120" y2="78" stroke="#6B3010" stroke-width="1.5" opacity="0.7" transform="rotate(-5,120,70)"/>
+          <line x1="140" y1="62" x2="140" y2="78" stroke="#6B3010" stroke-width="1.5" opacity="0.7" transform="rotate(-5,140,70)"/>
+          <line x1="160" y1="62" x2="160" y2="78" stroke="#6B3010" stroke-width="1.5" opacity="0.7" transform="rotate(-5,160,70)"/>
+          <line x1="180" y1="62" x2="180" y2="77" stroke="#6B3010" stroke-width="1.5" opacity="0.7" transform="rotate(-5,180,70)"/>
+          <line x1="200" y1="63" x2="200" y2="76" stroke="#6B3010" stroke-width="1.5" opacity="0.7" transform="rotate(-5,200,70)"/>
+          <text x="130" y="175" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#C9A84C" opacity="0.8" letter-spacing="2">CEYLON CINNAMON</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Ceylon Cinnamon</div>
+        <div class="spice-sinhala">Kurundu · කුරුඳු</div>
+        <p class="spice-desc">True cinnamon, native only to Sri Lanka. Delicate, sweet, and subtly complex — considered the finest cinnamon in the world. Used in our curries, rice dishes, and desserts for a warm, aromatic depth.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Sweet</span>
+          <span class="spice-tag">Aromatic</span>
+          <span class="spice-tag">Warm</span>
+          <span class="spice-tag">Antioxidant</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#1a0505,#250808);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <rect width="300" height="200" fill="url(#bg-glow)" opacity="0.3"/>
+          <!-- Chilli peppers -->
+          <path d="M80 50 Q100 30 140 45 Q170 55 175 90 Q175 120 155 140 Q140 155 120 150 Q90 140 80 115 Q60 80 80 50Z" fill="#CC2200" stroke="#AA1800" stroke-width="1"/>
+          <path d="M82 52 Q102 35 138 48 Q165 57 170 90 Q170 116 152 136 Q138 150 120 147 Q92 138 83 114 Q64 82 82 52Z" fill="#E02500"/>
+          <!-- Highlight -->
+          <ellipse cx="120" cy="85" rx="18" ry="30" fill="#FF3300" opacity="0.4" transform="rotate(-15,120,85)"/>
+          <!-- Stem -->
+          <path d="M80 50 Q72 38 68 25 Q70 20 74 22 Q76 32 82 44" fill="#228B22"/>
+          <!-- Second chilli -->
+          <path d="M170 70 Q185 55 210 65 Q225 75 222 100 Q218 125 200 135 Q182 140 172 125 Q158 105 160 85 Q160 72 170 70Z" fill="#AA1800" stroke="#881500" stroke-width="1" opacity="0.8"/>
+          <path d="M218 62 Q220 50 224 42 Q227 40 228 44 Q224 52 220 64" fill="#228B22"/>
+          <text x="150" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">CEYLON RED CHILLI</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Ceylon Red Chilli</div>
+        <div class="spice-sinhala">Miris · මිරිස්</div>
+        <p class="spice-desc">Bold, vibrant heat with a fruity undertone. Sri Lankan chillies deliver a full-bodied spice that builds slowly and lingers beautifully. The heart of our signature fiery curries and kottu.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Fiery</span>
+          <span class="spice-tag">Bold</span>
+          <span class="spice-tag">Fruity</span>
+          <span class="spice-tag">Rich Heat</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#0a1a08,#0f2010);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Curry leaves -->
+          <path d="M80 100 Q90 60 110 50 Q120 48 118 60 Q108 72 100 100Z" fill="#228B22"/>
+          <path d="M100 100 Q108 62 128 52 Q138 50 136 62 Q126 74 118 100Z" fill="#2A9B2A"/>
+          <path d="M120 100 Q126 63 146 54 Q156 52 154 64 Q144 76 136 100Z" fill="#228B22"/>
+          <path d="M140 100 Q144 64 162 57 Q172 56 170 67 Q162 78 154 100Z" fill="#1E7B1E"/>
+          <path d="M160 100 Q162 66 178 60 Q186 60 184 70 Q178 80 172 100Z" fill="#228B22"/>
+          <path d="M60 100 Q72 58 92 50 Q102 48 100 60 Q90 72 82 100Z" fill="#1E7B1E"/>
+          <!-- Branch -->
+          <path d="M70 100 Q120 95 180 100" stroke="#4A2800" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Stem center -->
+          <path d="M90 100 Q90 75 93 53" stroke="#4A2800" stroke-width="2" fill="none"/>
+          <path d="M110 100 Q110 77 113 55" stroke="#4A2800" stroke-width="2" fill="none"/>
+          <path d="M130 100 Q130 79 133 58" stroke="#4A2800" stroke-width="2" fill="none"/>
+          <path d="M150 100 Q150 81 152 62" stroke="#4A2800" stroke-width="2" fill="none"/>
+          <text x="150" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">CURRY LEAVES</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Ceylon Curry Leaves</div>
+        <div class="spice-sinhala">Karapincha · කරපිඤ්ඤා</div>
+        <p class="spice-desc">The soul of Sri Lankan cooking. Fresh curry leaves release a citrusy, floral aroma when fried in oil — they form the aromatic base of nearly every authentic dish we prepare.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Citrusy</span>
+          <span class="spice-tag">Floral</span>
+          <span class="spice-tag">Aromatic</span>
+          <span class="spice-tag">Fresh</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#1a1505,#201a08);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Turmeric roots -->
+          <path d="M60 130 Q80 100 110 95 Q130 92 140 110 Q150 128 135 145 Q115 158 90 150 Q65 140 60 130Z" fill="#D4A000" stroke="#B88800" stroke-width="1"/>
+          <path d="M62 130 Q82 103 110 98 Q128 95 138 112 Q147 128 133 143 Q114 155 91 148 Q67 139 62 130Z" fill="#E8B800"/>
+          <!-- Surface texture -->
+          <line x1="80" y1="115" x2="88" y2="140" stroke="#B88800" stroke-width="1.5" opacity="0.5"/>
+          <line x1="95" y1="110" x2="100" y2="138" stroke="#B88800" stroke-width="1.5" opacity="0.5"/>
+          <line x1="110" y1="108" x2="113" y2="134" stroke="#B88800" stroke-width="1.5" opacity="0.5"/>
+          <line x1="125" y1="112" x2="126" y2="136" stroke="#B88800" stroke-width="1.5" opacity="0.5"/>
+          <!-- Branches/offshoots -->
+          <path d="M110 95 Q115 70 125 58 Q132 50 136 56 Q133 64 128 75 Q120 88 115 98" fill="#C89800" stroke="#A07800" stroke-width="1"/>
+          <path d="M90 120 Q75 100 68 82 Q66 74 72 76 Q78 84 86 102 Q92 118 94 124" fill="#C89800" stroke="#A07800" stroke-width="1"/>
+          <!-- Cut surface showing yellow interior -->
+          <ellipse cx="185" cy="110" rx="38" ry="30" fill="#E8A000" stroke="#C08000" stroke-width="1"/>
+          <ellipse cx="185" cy="110" rx="30" ry="22" fill="#FFCC00" opacity="0.9"/>
+          <ellipse cx="185" cy="110" rx="20" ry="14" fill="#FFE040" opacity="0.9"/>
+          <text x="150" y="182" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">CEYLON TURMERIC</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Ceylon Turmeric</div>
+        <div class="spice-sinhala">Kaha · කහ</div>
+        <p class="spice-desc">Vivid golden root with an earthy, peppery warmth. Our Ceylon turmeric boasts higher curcumin content than imported varieties, giving our fried rice and curries their signature golden hue and health benefits.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Earthy</span>
+          <span class="spice-tag">Golden</span>
+          <span class="spice-tag">Anti-inflammatory</span>
+          <span class="spice-tag">Warming</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#050505,#0a0808);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Black pepper cluster -->
+          <circle cx="100" cy="90" r="12" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
+          <circle cx="100" cy="90" r="10" fill="#3a3a3a"/>
+          <circle cx="105" cy="87" r="3" fill="#5a5a5a" opacity="0.5"/>
+          <circle cx="120" cy="85" r="11" fill="#222" stroke="#111" stroke-width="1"/>
+          <circle cx="120" cy="85" r="9" fill="#333"/>
+          <circle cx="140" cy="92" r="13" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
+          <circle cx="140" cy="92" r="11" fill="#3a3a3a"/>
+          <circle cx="160" cy="88" r="10" fill="#222" stroke="#111" stroke-width="1"/>
+          <circle cx="160" cy="88" r="8" fill="#2d2d2d"/>
+          <circle cx="110" cy="110" r="11" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
+          <circle cx="110" cy="110" r="9" fill="#333"/>
+          <circle cx="130" cy="108" r="12" fill="#222" stroke="#111" stroke-width="1"/>
+          <circle cx="130" cy="108" r="10" fill="#2a2a2a"/>
+          <circle cx="150" cy="112" r="10" fill="#2a2a2a" stroke="#111" stroke-width="1"/>
+          <circle cx="150" cy="112" r="8" fill="#333"/>
+          <circle cx="90" cy="110" r="9" fill="#1a1a1a" stroke="#111" stroke-width="1"/>
+          <circle cx="170" cy="100" r="9" fill="#222" stroke="#111" stroke-width="1"/>
+          <!-- Shine -->
+          <circle cx="97" cy="87" r="2" fill="#5a5a5a" opacity="0.6"/>
+          <circle cx="137" cy="89" r="2.5" fill="#5a5a5a" opacity="0.6"/>
+          <circle cx="127" cy="105" r="2" fill="#5a5a5a" opacity="0.6"/>
+          <text x="150" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">CEYLON BLACK PEPPER</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Ceylon Black Pepper</div>
+        <div class="spice-sinhala">Gammiris · ගම්මිරිස්</div>
+        <p class="spice-desc">The "king of spices" — Sri Lanka's black pepper is renowned for its intense, complex heat with floral and citrus notes. Used liberally in our kottu, noodles, and marinades for a distinctive punch.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Intense</span>
+          <span class="spice-tag">Floral</span>
+          <span class="spice-tag">Citrus Notes</span>
+          <span class="spice-tag">Sharp</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#1a1005,#200f05);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Cardamom pods -->
+          <ellipse cx="90" cy="95" rx="18" ry="30" fill="#4a7c2a" stroke="#2a5a10" stroke-width="1" transform="rotate(-15,90,95)"/>
+          <ellipse cx="91" cy="95" rx="14" ry="26" fill="#5a8c3a" transform="rotate(-15,91,95)"/>
+          <!-- Ridges -->
+          <line x1="82" y1="72" x2="82" y2="118" stroke="#2a5a10" stroke-width="1.5" opacity="0.6" transform="rotate(-15,82,95)"/>
+          <line x1="88" y1="70" x2="88" y2="120" stroke="#2a5a10" stroke-width="1.5" opacity="0.6" transform="rotate(-15,88,95)"/>
+          <line x1="94" y1="70" x2="94" y2="120" stroke="#2a5a10" stroke-width="1.5" opacity="0.6" transform="rotate(-15,94,95)"/>
+          <line x1="100" y1="72" x2="100" y2="118" stroke="#2a5a10" stroke-width="1.5" opacity="0.6" transform="rotate(-15,100,95)"/>
+          <!-- Second pod -->
+          <ellipse cx="135" cy="90" rx="16" ry="28" fill="#3a6c1a" stroke="#1a4a08" stroke-width="1" transform="rotate(10,135,90)"/>
+          <ellipse cx="135" cy="90" rx="12" ry="24" fill="#4a7c2a" transform="rotate(10,135,90)"/>
+          <!-- Third pod -->
+          <ellipse cx="175" cy="98" rx="15" ry="26" fill="#4a7c2a" stroke="#2a5a10" stroke-width="1" transform="rotate(-5,175,98)"/>
+          <ellipse cx="175" cy="98" rx="11" ry="22" fill="#5a8c3a" transform="rotate(-5,175,98)"/>
+          <!-- Seeds scattered -->
+          <ellipse cx="88" cy="140" rx="5" ry="3" fill="#2a1a08"/>
+          <ellipse cx="100" cy="143" rx="4" ry="2.5" fill="#2a1a08"/>
+          <ellipse cx="115" cy="141" rx="5" ry="3" fill="#2a1a08"/>
+          <ellipse cx="128" cy="145" rx="4" ry="2.5" fill="#2a1a08"/>
+          <text x="150" y="180" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">CARDAMOM</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Green Cardamom</div>
+        <div class="spice-sinhala">Enasal · එනසල්</div>
+        <p class="spice-desc">Intensely aromatic with eucalyptus and sweet floral notes. Ceylon cardamom pods are hand-picked and sun-dried. A key player in our biryanis, masala blends, and desserts.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Floral</span>
+          <span class="spice-tag">Eucalyptus</span>
+          <span class="spice-tag">Sweet</span>
+          <span class="spice-tag">Digestive</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#1a0d05,#200f08);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Cloves -->
+          <g transform="rotate(-20,95,90)">
+            <line x1="95" y1="55" x2="95" y2="105" stroke="#4a2010" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="95" cy="55" r="8" fill="#6a3018"/>
+            <circle cx="95" cy="55" r="5" fill="#8a4020"/>
+            <circle cx="93" cy="53" r="2" fill="#aa5030" opacity="0.7"/>
+          </g>
+          <g transform="rotate(5,125,90)">
+            <line x1="125" y1="50" x2="125" y2="108" stroke="#4a2010" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="125" cy="50" r="9" fill="#5a2810"/>
+            <circle cx="125" cy="50" r="6" fill="#7a3818"/>
+            <circle cx="123" cy="48" r="2.5" fill="#9a4828" opacity="0.7"/>
+          </g>
+          <g transform="rotate(15,155,90)">
+            <line x1="155" y1="55" x2="155" y2="108" stroke="#4a2010" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="155" cy="55" r="8" fill="#6a3018"/>
+            <circle cx="155" cy="55" r="5" fill="#8a4020"/>
+            <circle cx="153" cy="53" r="2" fill="#aa5030" opacity="0.7"/>
+          </g>
+          <g transform="rotate(-10,110,115)">
+            <line x1="110" y1="80" x2="110" y2="135" stroke="#4a2010" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="110" cy="80" r="7" fill="#5a2810"/>
+            <circle cx="110" cy="80" r="4.5" fill="#7a3818"/>
+          </g>
+          <g transform="rotate(20,145,118)">
+            <line x1="145" y1="82" x2="145" y2="138" stroke="#4a2010" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="145" cy="82" r="7" fill="#6a3018"/>
+            <circle cx="145" cy="82" r="4.5" fill="#8a4020"/>
+          </g>
+          <text x="150" y="180" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">CEYLON CLOVES</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Ceylon Cloves</div>
+        <div class="spice-sinhala">Karabu · කරාබු</div>
+        <p class="spice-desc">Intensely pungent and warming with a numbing quality. Sri Lankan cloves are prized for their high eugenol content, making them more potent than other varieties. Essential in our biryani and spice blends.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Pungent</span>
+          <span class="spice-tag">Warming</span>
+          <span class="spice-tag">Numbing</span>
+          <span class="spice-tag">Medicinal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#1a1208,#1e1508);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Cumin seeds scattered -->
+          <ellipse cx="80" cy="85" rx="12" ry="4" fill="#8B7355" transform="rotate(-20,80,85)"/>
+          <ellipse cx="100" cy="75" rx="11" ry="3.5" fill="#7a6245" transform="rotate(10,100,75)"/>
+          <ellipse cx="120" cy="90" rx="12" ry="4" fill="#8B7355" transform="rotate(-5,120,90)"/>
+          <ellipse cx="140" cy="80" rx="11" ry="3.5" fill="#9a7f60" transform="rotate(25,140,80)"/>
+          <ellipse cx="160" cy="88" rx="12" ry="4" fill="#8B7355" transform="rotate(-15,160,88)"/>
+          <ellipse cx="90" cy="100" rx="12" ry="4" fill="#7a6245" transform="rotate(15,90,100)"/>
+          <ellipse cx="110" cy="108" rx="11" ry="3.5" fill="#8B7355" transform="rotate(-10,110,108)"/>
+          <ellipse cx="130" cy="102" rx="12" ry="4" fill="#9a7f60" transform="rotate(20,130,102)"/>
+          <ellipse cx="150" cy="110" rx="11" ry="3.5" fill="#8B7355" transform="rotate(-25,150,110)"/>
+          <ellipse cx="170" cy="95" rx="12" ry="4" fill="#7a6245" transform="rotate(8,170,95)"/>
+          <ellipse cx="85" cy="115" rx="11" ry="3.5" fill="#8B7355" transform="rotate(15,85,115)"/>
+          <ellipse cx="105" cy="120" rx="12" ry="4" fill="#9a7f60" transform="rotate(-18,105,120)"/>
+          <ellipse cx="125" cy="118" rx="11" ry="3.5" fill="#7a6245" transform="rotate(12,125,118)"/>
+          <ellipse cx="145" cy="122" rx="12" ry="4" fill="#8B7355" transform="rotate(-8,145,122)"/>
+          <ellipse cx="165" cy="115" rx="11" ry="3.5" fill="#8B7355" transform="rotate(22,165,115)"/>
+          <!-- Ridges on seeds -->
+          <line x1="76" y1="85" x2="84" y2="85" stroke="#5a4230" stroke-width="0.8" opacity="0.6" transform="rotate(-20,80,85)"/>
+          <line x1="96" y1="75" x2="104" y2="75" stroke="#5a4230" stroke-width="0.8" opacity="0.6" transform="rotate(10,100,75)"/>
+          <text x="150" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">CEYLON CUMIN</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Ceylon Cumin</div>
+        <div class="spice-sinhala">Suduru · සූදුරු</div>
+        <p class="spice-desc">Earthy, nutty, and slightly bitter with a warm undertone. Ceylon cumin seeds are slow-roasted before grinding to release their full aromatic potential. The backbone of our curry powder blends.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Earthy</span>
+          <span class="spice-tag">Nutty</span>
+          <span class="spice-tag">Roasted</span>
+          <span class="spice-tag">Digestive</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#0a1505,#0f1a08);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Pandan leaf -->
+          <path d="M50 180 Q60 130 80 100 Q100 70 120 50 Q135 35 140 40 Q142 50 130 65 Q110 90 95 115 Q75 145 65 180Z" fill="#228B22" stroke="#1a6b1a" stroke-width="1"/>
+          <path d="M52 180 Q62 132 82 102 Q102 72 122 52 Q136 38 138 43 Q139 52 128 66 Q109 91 94 116 Q74 146 64 180Z" fill="#2A9B2A"/>
+          <!-- Center vein -->
+          <path d="M56 178 Q70 140 90 110 Q110 80 128 58 Q136 46 137 43" stroke="#1a6b1a" stroke-width="1.5" fill="none"/>
+          <!-- Side veins -->
+          <path d="M72 155 Q82 148 88 142" stroke="#1a6b1a" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M80 140 Q92 132 99 125" stroke="#1a6b1a" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M88 125 Q100 116 108 108" stroke="#1a6b1a" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M97 110 Q108 100 116 93" stroke="#1a6b1a" stroke-width="1" fill="none" opacity="0.6"/>
+          <!-- Second shorter leaf -->
+          <path d="M170 180 Q178 148 188 120 Q200 95 210 78 Q218 66 220 70 Q220 80 214 90 Q202 110 192 132 Q180 158 174 180Z" fill="#1E7B1E" stroke="#166016" stroke-width="1" opacity="0.85"/>
+          <text x="150" y="198" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">PANDAN / RAMPE</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Pandan Leaf (Rampe)</div>
+        <div class="spice-sinhala">Rampe · රම්පේ</div>
+        <p class="spice-desc">The "vanilla of Asia" — pandan leaves impart a sweet, grassy, and floral fragrance. Used fresh in our coconut rice and desserts, rampe is what makes Sri Lankan rice unmistakably fragrant and special.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Floral</span>
+          <span class="spice-tag">Sweet</span>
+          <span class="spice-tag">Grassy</span>
+          <span class="spice-tag">Fragrant</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#1a0a0a,#200808);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Goraka / Gamboge pieces -->
+          <path d="M80 90 Q95 65 120 70 Q140 75 140 95 Q140 118 118 128 Q95 132 80 115 Q68 100 80 90Z" fill="#8B0000" stroke="#600000" stroke-width="1"/>
+          <path d="M82 92 Q96 68 118 73 Q136 77 137 95 Q137 115 116 125 Q94 129 80 114 Q70 102 82 92Z" fill="#AA1010"/>
+          <!-- Dried wrinkled texture -->
+          <path d="M90 82 Q100 78 112 84" stroke="#600000" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <path d="M86 95 Q100 90 118 96" stroke="#600000" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <path d="M88 108 Q102 103 116 108" stroke="#600000" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <path d="M90 120 Q105 116 115 118" stroke="#600000" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <!-- Second piece -->
+          <path d="M160 85 Q175 65 196 72 Q210 78 208 98 Q206 118 188 124 Q168 126 158 110 Q148 94 160 85Z" fill="#7B0000" stroke="#500000" stroke-width="1" opacity="0.9"/>
+          <path d="M162 87 Q176 68 194 75 Q207 80 205 98 Q203 116 186 122 Q167 124 158 110 Q149 96 162 87Z" fill="#992010" opacity="0.9"/>
+          <text x="150" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">GORAKA / GAMBOGE</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Goraka (Gamboge)</div>
+        <div class="spice-sinhala">Goraka · ගොරකා</div>
+        <p class="spice-desc">A uniquely Sri Lankan souring agent made from dried garcinia fruit. Goraka gives our fish curries and black curries their signature tangy depth that cannot be replicated with vinegar or tamarind.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Sour</span>
+          <span class="spice-tag">Tangy</span>
+          <span class="spice-tag">Unique</span>
+          <span class="spice-tag">Ceylon-only</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#150808,#1a0a0a);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Fenugreek seeds -->
+          <g>
+            <rect x="75" y="82" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(15,79,85)"/>
+            <rect x="90" y="78" width="8" height="7" rx="2" fill="#C89830" transform="rotate(-10,94,81)"/>
+            <rect x="105" y="85" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(25,109,88)"/>
+            <rect x="120" y="80" width="8" height="7" rx="2" fill="#C89830" transform="rotate(-5,124,83)"/>
+            <rect x="135" y="87" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(18,139,90)"/>
+            <rect x="150" y="82" width="8" height="7" rx="2" fill="#C89830" transform="rotate(-12,154,85)"/>
+            <rect x="165" y="88" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(8,169,91)"/>
+            <rect x="82" y="98" width="8" height="7" rx="2" fill="#C89830" transform="rotate(-20,86,101)"/>
+            <rect x="97" y="102" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(12,101,105)"/>
+            <rect x="112" y="96" width="8" height="7" rx="2" fill="#C89830" transform="rotate(-8,116,99)"/>
+            <rect x="127" y="103" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(20,131,106)"/>
+            <rect x="142" y="98" width="8" height="7" rx="2" fill="#C89830" transform="rotate(-15,146,101)"/>
+            <rect x="157" y="104" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(5,161,107)"/>
+            <rect x="88" y="113" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(10,92,116)"/>
+            <rect x="103" y="118" width="8" height="7" rx="2" fill="#C89830" transform="rotate(-18,107,121)"/>
+            <rect x="118" y="113" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(22,122,116)"/>
+            <rect x="133" y="120" width="8" height="7" rx="2" fill="#C89830" transform="rotate(-6,137,123)"/>
+            <rect x="148" y="115" width="8" height="7" rx="2" fill="#D4A843" transform="rotate(14,152,118)"/>
+          </g>
+          <text x="150" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">FENUGREEK</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Fenugreek Seeds</div>
+        <div class="spice-sinhala">Uluhal · උළුහල්</div>
+        <p class="spice-desc">Slightly bitter, nutty seeds that temper in hot oil to release a rich, maple-like aroma. Fenugreek is the secret behind the depth in our slow-cooked curries and is prized in traditional Ceylon medicine.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Bitter</span>
+          <span class="spice-tag">Nutty</span>
+          <span class="spice-tag">Maple-like</span>
+          <span class="spice-tag">Medicinal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spice-card reveal">
+      <div class="spice-img" style="background:linear-gradient(135deg,#1a1508,#201a0a);">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <!-- Mustard seeds -->
+          <circle cx="75" cy="88" r="5" fill="#F5C842" stroke="#D4A800" stroke-width="0.5"/>
+          <circle cx="88" cy="80" r="4.5" fill="#E8B830" stroke="#C09000" stroke-width="0.5"/>
+          <circle cx="102" cy="90" r="5" fill="#F5C842"/>
+          <circle cx="116" cy="83" r="4.5" fill="#E0A820"/>
+          <circle cx="130" cy="91" r="5" fill="#F5C842"/>
+          <circle cx="144" cy="85" r="4.5" fill="#E8B830"/>
+          <circle cx="158" cy="92" r="5" fill="#F5C842"/>
+          <circle cx="170" cy="86" r="4.5" fill="#E0A820"/>
+          <circle cx="80" cy="102" r="4.5" fill="#E8B830"/>
+          <circle cx="94" cy="108" r="5" fill="#F5C842"/>
+          <circle cx="108" cy="100" r="4.5" fill="#E0A820"/>
+          <circle cx="122" cy="107" r="5" fill="#F5C842"/>
+          <circle cx="136" cy="101" r="4.5" fill="#E8B830"/>
+          <circle cx="150" cy="108" r="5" fill="#F5C842"/>
+          <circle cx="164" cy="102" r="4.5" fill="#E0A820"/>
+          <circle cx="86" cy="116" r="5" fill="#F5C842"/>
+          <circle cx="100" cy="122" r="4.5" fill="#E8B830"/>
+          <circle cx="114" cy="116" r="5" fill="#F5C842"/>
+          <circle cx="128" cy="122" r="4.5" fill="#E0A820"/>
+          <circle cx="142" cy="117" r="5" fill="#F5C842"/>
+          <circle cx="156" cy="123" r="4.5" fill="#E8B830"/>
+          <!-- Shine highlights -->
+          <circle cx="73" cy="86" r="1.5" fill="#fff" opacity="0.5"/>
+          <circle cx="100" cy="88" r="1.5" fill="#fff" opacity="0.5"/>
+          <circle cx="128" cy="89" r="1.5" fill="#fff" opacity="0.5"/>
+          <text x="150" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" opacity="0.8" letter-spacing="2">MUSTARD SEEDS</text>
+        </svg>
+      </div>
+      <div class="spice-body">
+        <div class="spice-name">Yellow Mustard Seeds</div>
+        <div class="spice-sinhala">Abba · අබ</div>
+        <p class="spice-desc">Tiny golden seeds that pop and splutter when added to hot oil, releasing a nutty, pungent flavour. The traditional tempering base for all our Sri Lankan curries, dhal, and coconut chutneys.</p>
+        <div class="spice-tags">
+          <span class="spice-tag">Nutty</span>
+          <span class="spice-tag">Pungent</span>
+          <span class="spice-tag">Tempering</span>
+          <span class="spice-tag">Pops in Oil</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /spices-grid -->
+</section>
+
+<!-- ORDER SECTION -->
+<section id="order">
+  <div class="order-inner">
+    <div class="section-header reveal">
+      <p class="section-badge">Order Now</p>
+      <h2 class="section-title">Ready to <em>Experience</em><br>Ceylon Flavours?</h2>
+      <div class="ornament-divider"><span>✦</span></div>
+    </div>
+    <div class="order-card reveal">
+      <div class="foody-logo-area">
+        <div class="foody-badge">🛵 FOODY</div>
+        <div style="text-align:left;">
+          <div style="font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">Order via</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);">Foody Delivery App</div>
+        </div>
+      </div>
+      <h3 class="order-title">Delivery to Your Door<br><em>in Larnaca</em></h3>
+      <p class="order-desc">Order fresh, authentic Sri Lankan and Asian food directly through the Foody app. We prepare every dish to order using our signature Ceylon spices.</p>
+      <div class="hours-grid">
+        <div class="hours-item">
+          <span class="hours-time">6:00 PM</span>
+          <span class="hours-label">Opens</span>
+        </div>
+        <div style="display:flex;align-items:center;color:var(--gold);font-size:1.5rem;">→</div>
+        <div class="hours-item">
+          <span class="hours-time">10:00 PM</span>
+          <span class="hours-label">Last Order</span>
+        </div>
+      </div>
+      <div class="order-steps">
+        <div class="order-step">
+          <div class="step-num">1</div>
+          <p class="step-text">Download the <strong>Foody App</strong> on iOS or Android</p>
+        </div>
+        <div class="order-step">
+          <div class="step-num">2</div>
+          <p class="step-text">Search for <strong>"Ceylon Spice Kitchen"</strong> in Larnaca</p>
+        </div>
+        <div class="order-step">
+          <div class="step-num">3</div>
+          <p class="step-text">Place your order and <strong>enjoy the taste of Ceylon</strong>!</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">
+        <a href="https://www.foody.com.cy" target="_blank" class="btn-primary" style="text-decoration:none;">🛵 Order on Foody Now</a>
+      </div>
+      <p style="margin-top:1.5rem;font-size:0.75rem;color:var(--muted);">📍 Larnaca, Cyprus &nbsp;|&nbsp; 🕕 Daily: 6PM – 10PM CY Time &nbsp;|&nbsp; ☎ Contact via Foody App</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo">
+        <span class="nav-logo-icon">🌿</span>
+        Ceylon Spice <span>Kitchen</span>
+      </div>
+      <p>Authentic Sri Lankan & Asian cuisine, crafted with 20+ years of passion and exclusively All Ceylon Spices. Delivering flavour across Larnaca, Cyprus — every evening.</p>
+      <div style="margin-top:1.5rem;" id="footerOpenStatus"></div>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#menu">Our Menu</a></li>
+        <li><a href="#spices">Ceylon Spices</a></li>
+        <li><a href="#order">Order on Foody</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Visit & Order</h5>
+      <ul>
+        <li><a href="#">📍 Larnaca, Cyprus</a></li>
+        <li><a href="#">🕕 6:00 PM – 10:00 PM</a></li>
+        <li><a href="#">📅 Open Daily</a></li>
+        <li><a href="https://www.foody.com.cy" target="_blank">🛵 Foody App</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Ceylon Spice Kitchen · Larnaca, Cyprus · All rights reserved</p>
+    <p style="color:rgba(168,152,128,0.4);font-size:0.7rem;">Made with ❤️ &amp; All Ceylon Spices</p>
+    <div class="footer-social">
+      <div class="social-btn" title="Instagram">📸</div>
+      <div class="social-btn" title="Facebook">📘</div>
+      <div class="social-btn" title="WhatsApp">💬</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+// ===== PARTICLES =====
+(function createParticles() {
+  const container = document.getElementById('particles');
+  const count = 25;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+    p.style.animationDuration = (Math.random() * 20 + 15) + 's';
+    p.style.animationDelay = (Math.random() * 20) + 's';
+    p.style.opacity = Math.random() * 0.5;
+    container.appendChild(p);
+  }
+})();
+
+// ===== NAV SCROLL =====
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ===== MOBILE NAV =====
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  mobileNav.classList.toggle('open');
+  const spans = hamburger.querySelectorAll('span');
+  const isOpen = mobileNav.classList.contains('open');
+  spans[0].style.transform = isOpen ? 'rotate(45deg) translate(5px,5px)' : '';
+  spans[1].style.opacity = isOpen ? '0' : '1';
+  spans[2].style.transform = isOpen ? 'rotate(-45deg) translate(5px,-5px)' : '';
+});
+function closeMobileNav() { mobileNav.classList.remove('open'); }
+
+// ===== OPEN STATUS =====
+function getOpenStatus() {
+  const now = new Date();
+  // Cyprus time offset (UTC+3 in summer, UTC+2 in winter)
+  const month = now.getUTCMonth();
+  const isDST = month >= 2 && month <= 9;
+  const offset = isDST ? 3 : 2;
+  const cyHour = (now.getUTCHours() + offset) % 24;
+  const isOpen = cyHour >= 18 && cyHour < 22;
+  return isOpen;
+}
+function renderStatus(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = getOpenStatus();
+  el.innerHTML = `<span class="open-status ${isOpen ? 'open' : 'closed'}"><span class="dot"></span>${isOpen ? 'Open Now' : 'Opens at 6PM'}</span>`;
+}
+renderStatus('openStatus');
+renderStatus('footerOpenStatus');
+
+// ===== MENU TABS =====
+document.querySelectorAll('.menu-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    const cat = this.dataset.cat;
+    const allCats = document.querySelectorAll('.menu-category');
+    if (cat === 'all') {
+      allCats.forEach(c => { c.classList.add('active'); });
+    } else {
+      allCats.forEach(c => {
+        c.classList.toggle('active', c.dataset.category === cat);
+      });
+    }
+  });
+});
+
+// ===== ADD TO ORDER (TOAST) =====
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-text').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+}
+function handleOrder(card) {
+  const name = card.querySelector('.food-name').textContent;
+  showToast(`"${name}" added to your Foody order! 🎉`);
+}
+document.querySelectorAll('.add-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const card = btn.closest('.food-card');
+    handleOrder(card);
+    btn.textContent = '✓';
+    btn.style.background = 'var(--gold)';
+    btn.style.color = 'var(--deep)';
+    setTimeout(() => { btn.textContent = '+'; btn.style.background = ''; btn.style.color = ''; }, 1800);
+  });
+});
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+// ===== COUNTER ANIMATION =====
+function animateCounter(el, target, duration = 2000) {
+  let start = 0;
+  const increment = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += increment;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = Math.floor(start) + (target >= 100 ? '+' : '+');
+  }, 16);
+}
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('[data-target]').forEach(el => {
+        animateCounter(el, parseInt(el.dataset.target));
+      });
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+const expSection = document.querySelector('#experience .experience-grid');
+if (expSection) counterObserver.observe(expSection);
+
+// ===== STAGGERED CARD REVEAL =====
+document.querySelectorAll('.food-card, .spice-card').forEach((card, i) => {
+  card.style.transitionDelay = (i % 4) * 0.1 + 's';
+});
+
+// ===== SMOOTH ANCHOR SCROLLING (mobile) =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 80;
+      window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
